@@ -178,26 +178,35 @@ namespace spclasses
     if (isupper(c))
     {
       // Xử lý chữ in hoa
-      return 'A' + ((c - 'A' - shift + 26) % 26);
+      return 'A' + ((c - 'A' + shift ) % 26);
     }
     else if (islower(c))
     {
       // Xử lý chữ in thường
-      return 'a' + ((c - 'a' - shift + 26) % 26);
+      return 'a' + ((c - 'a' + shift ) % 26);
     }
-    // Nếu không phải chữ cái, giữ nguyên ký tự
-    return c;
+    // Nếu không phải chữ cái, không thay đổi
+    return c;   
+    
   }
 
 }
 
 void quicksort(int arr[], int l, int r)
 {
+  /*
+  Ý tưởng: Chọn pivot là phần tử ở giữa
+  Chọn 2 đầu l, r từ 2 phía của mảng
+  Nếu arr[l] đúng vị trí thì l++
+  Nếu arr[r] đúng vị trí thì r--
+  -> mục đích là tìm các phần tử sai vị trí và đổi ch
+  => sẽ có 2 mảng con bên trái và bên phải pivot được sắp đúng chỗ -> đệ quy
+  */
   if (l >= r)
     return;
   int pivot = arr[(l + r) / 2];
   int i = l, j = r;
-  while (i <= j)
+  while (i < j) // mới fix 
   {
     while (arr[i] < pivot)
       i++;
@@ -357,9 +366,10 @@ string Ceasar_Cipher(string message, int EXP1, int EXP2)
   {
     cipher[i] = spclasses::shiftLeft(message[i], shift);
     // nếu cipher không phải chữ cái thì return INVALID
-    if (!isalpha(cipher[i]) && cipher[i] != ' ')
+    if (!isalpha(cipher[i]) && cipher[i] != ' ' && !isdigit(cipher[i]))
       return "INVALID";
   }
+  //cout << cipher << endl;
   // convert message to lower case
   for (int i = 0; i < message.length(); i++)
   {
@@ -446,8 +456,8 @@ void manageLogistics(int LF1, int LF2, int EXP1, int EXP2, int &T1, int &T2, int
   if (E == 0) { 
   double deltaT1 = ((LF1 * 1.0 / (LF1 * 1.0 + LF2)) * (T1 + T2) ) * (1 + (EXP1 * 1.0 - EXP2) / 100.0);
   double deltaT2 = (T1 + T2) - deltaT1;
-  T1 = ceil(T1 ); spclasses::resetT(T1);
-  T2 = ceil(T2 ); spclasses::resetT(T2);
+  T1 += ceil (deltaT1); spclasses::resetT(T1);
+  T2 += ceil(deltaT2); spclasses::resetT(T2);
   }
 
   if (E >= 1 && E <= 9)

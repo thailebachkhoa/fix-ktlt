@@ -70,6 +70,6 @@ void tnc_tc_01()
 int main(int argc, const char *argv[])
 {
     // cipher test
-    cout << Ceasar_Cipher("zwg Hwg", 350, 400) << endl;
+    cout << Ceasar_Cipher("Heo Peo", 350, 400) << endl;
     
 }
